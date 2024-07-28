@@ -9,9 +9,12 @@ import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
 import { EmployeeModule } from './employee/employee.module';
 import { RoleModule } from './role/role.module';
+import { TableModule } from './table/table.module';
+import { IntegralModule } from './integral/integral.module';
+import { CouponModule } from './coupon/coupon.module';
 
 @Module({
-  imports: [UserModule, AddressModule, CategoryModule, ShopModule, OrderModule, ProductModule, EmployeeModule, RoleModule],
+  imports: [UserModule, AddressModule, CategoryModule, ShopModule, OrderModule, ProductModule, EmployeeModule, RoleModule, TableModule, IntegralModule, CouponModule],
   controllers: [AppController],
   providers: [AppService],
 })
