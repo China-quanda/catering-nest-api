@@ -12,9 +12,10 @@ import { RoleModule } from './role/role.module';
 import { TableModule } from './table/table.module';
 import { IntegralModule } from './integral/integral.module';
 import { CouponModule } from './coupon/coupon.module';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [UserModule, AddressModule, CategoryModule, ShopModule, OrderModule, ProductModule, EmployeeModule, RoleModule, TableModule, IntegralModule, CouponModule],
+  imports: [UserModule, AddressModule, CategoryModule, ShopModule, OrderModule, ProductModule, EmployeeModule, RoleModule, TableModule, IntegralModule, CouponModule, PrismaModule],
   controllers: [AppController],
   providers: [AppService],
 })

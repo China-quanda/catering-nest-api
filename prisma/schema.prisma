@@ -16,10 +16,10 @@ datasource db {
 // 用户
 model User {
   id       Int       @id @default(autoincrement())
-  phone    Int       @unique
+  phone    String       @unique
   name     String?
-  sex      String //性别 1男 2女
-  birthday DateTime //生日
+  sex      Int //性别 1男 2女
+  birthday DateTime? //生日
   password String
   addresss Address[]
 }
@@ -30,8 +30,8 @@ model Address {
   createTime DateTime @default(now()) @map("create_time")
   updateTime DateTime @updatedAt @map("update_time")
   name       String //联系人姓名
-  sex        String //性别 1先生 2女士
-  phone      Int //手机号码
+  sex        Int //性别 1先生 2女士
+  phone      String //手机号码
   isDefault  Boolean  @default(false) @map("is_default") // 是否默认地址
   latitude   String //纬度，浮点数，范围为-90~90，负数表示南纬
   longitude  String //经度，浮点数，范围为-180~180，负数表示西经
@@ -73,8 +73,8 @@ model Employee {
   createTime    DateTime @default(now()) @map("create_time")
   updateTime    DateTime @updatedAt @map("update_time")
   name          String //姓名
-  sex           String //性别 1男 2女
-  phone         Int //手机号码
+  sex           Int //性别 1男 2女
+  phone         String //手机号码
   birthday      DateTime //生日
   //婚姻状态 1未婚 2已婚 3离异 4丧偶
   maritalStatus DateTime @map("marital_status")
