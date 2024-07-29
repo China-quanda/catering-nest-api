@@ -3,6 +3,7 @@ import { Prisma } from '@prisma/client';
 import { Type } from 'class-transformer';
 import {
   IsBoolean,
+  IsInt,
   IsNotEmpty,
   IsOptional,
   IsString,
@@ -22,7 +23,7 @@ export class CreateUserDto implements Prisma.UserCreateInput {
   phone: string;
 
   @ApiProperty({ description: '性别 1男 2女', required: true, example: 1 })
-  @IsString()
+  @IsInt()
   @Type(() => Number)
   @IsNotEmpty({ message: '性别不能为空' })
   sex: number;
