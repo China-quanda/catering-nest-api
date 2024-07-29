@@ -78,9 +78,9 @@ model Employee {
   name          String //姓名
   sex           Int //性别 1男 2女
   phone         String //手机号码
-  birthday      DateTime //生日
+  birthday      DateTime? //生日
   //婚姻状态 1未婚 2已婚 3离异 4丧偶
-  maritalStatus DateTime @map("marital_status")
+  maritalStatus Int @map("marital_status")
   entryDate     DateTime @map("entry_date") //入职日期
   // 职位
   shop          Shop?    @relation(fields: [shopId], references: [id])
@@ -116,6 +116,9 @@ model Product {
   createTime DateTime  @default(now()) @map("create_time")
   updateTime DateTime  @updatedAt @map("update_time")
   name       String //名称
+  originalPrice String @map("original_price")//原价
+  currentPrice String? @map("current_price")// 现价
+  pictures String[]
   category   Category? @relation(fields: [categoryId], references: [id])
   categoryId Int?
 }
