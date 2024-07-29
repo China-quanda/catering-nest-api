@@ -106,7 +106,7 @@ model Category {
   updateTime DateTime  @updatedAt @map("update_time")
   name       String //名称
   shop       Shop?     @relation(fields: [shopId], references: [id])
-  shopId     Int?
+  shopId     Int
   products   Product[]
 }
 
