@@ -12,7 +12,7 @@ import { RoleModule } from './modules/role/role.module';
 import { TableModule } from './modules/table/table.module';
 import { IntegralModule } from './modules/integral/integral.module';
 import { CouponModule } from './modules/coupon/coupon.module';
-import { PrismaModule } from './prisma/prisma.module';
+import { PrismaModule } from './common/prisma/prisma.module';
 import { ConfigModule } from './config/config.module';
 
 @Module({
