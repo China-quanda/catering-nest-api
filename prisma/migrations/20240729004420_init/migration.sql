@@ -1,10 +1,10 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "phone" INTEGER NOT NULL,
+    "phone" TEXT NOT NULL,
     "name" TEXT,
-    "sex" TEXT NOT NULL,
-    "birthday" TIMESTAMP(3) NOT NULL,
+    "sex" INTEGER NOT NULL,
+    "birthday" TIMESTAMP(3),
     "password" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
@@ -16,8 +16,8 @@ CREATE TABLE "Address" (
     "create_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "update_time" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
-    "sex" TEXT NOT NULL,
-    "phone" INTEGER NOT NULL,
+    "sex" INTEGER NOT NULL,
+    "phone" TEXT NOT NULL,
     "is_default" BOOLEAN NOT NULL DEFAULT false,
     "latitude" TEXT NOT NULL,
     "longitude" TEXT NOT NULL,
@@ -59,8 +59,8 @@ CREATE TABLE "Employee" (
     "create_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "update_time" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
-    "sex" TEXT NOT NULL,
-    "phone" INTEGER NOT NULL,
+    "sex" INTEGER NOT NULL,
+    "phone" TEXT NOT NULL,
     "birthday" TIMESTAMP(3) NOT NULL,
     "marital_status" TIMESTAMP(3) NOT NULL,
     "entry_date" TIMESTAMP(3) NOT NULL,
