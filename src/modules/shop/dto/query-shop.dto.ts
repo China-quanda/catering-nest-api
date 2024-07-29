@@ -45,7 +45,7 @@ export class QueryShopDto extends BaseQueryDto {
   @IsString()
   @Type(() => String)
   @IsOptional()
-  @ApiProperty({ description: '郴州市', example: '中国', required: false })
+  @ApiProperty({ description: '城市名称', example: '郴州市', required: false })
   city?: string;
 
   @IsString()

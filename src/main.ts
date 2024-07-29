@@ -20,7 +20,7 @@ async function bootstrap() {
   const nestConfig = configService.get<NestConfig>('nest');
 
   // 配置管道
-  // app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
 
   // 设置 api 访问前缀
   app.setGlobalPrefix('/api');

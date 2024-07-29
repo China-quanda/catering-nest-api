@@ -3,9 +3,11 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "phone" TEXT NOT NULL,
     "name" TEXT,
+    "avatar" TEXT,
     "sex" INTEGER NOT NULL,
     "birthday" TIMESTAMP(3),
     "password" TEXT NOT NULL,
+    "status" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
