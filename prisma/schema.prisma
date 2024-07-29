@@ -4,6 +4,7 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// npx prisma migrate dev --name "edit"
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,9 +19,11 @@ model User {
   id       Int       @id @default(autoincrement())
   phone    String       @unique
   name     String?
+  avatar     String?
   sex      Int //性别 1男 2女
   birthday DateTime? //生日
   password String
+  status Boolean @default(true)
   addresss Address[]
 }
 

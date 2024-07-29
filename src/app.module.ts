@@ -14,6 +14,7 @@ import { IntegralModule } from './modules/integral/integral.module';
 import { CouponModule } from './modules/coupon/coupon.module';
 import { PrismaModule } from './common/prisma/prisma.module';
 import { ConfigModule } from './config/config.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ConfigModule } from './config/config.module';
     IntegralModule,
     CouponModule,
     PrismaModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
