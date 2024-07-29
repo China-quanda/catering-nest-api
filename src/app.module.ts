@@ -13,7 +13,7 @@ import { TableModule } from './modules/table/table.module';
 import { IntegralModule } from './modules/integral/integral.module';
 import { CouponModule } from './modules/coupon/coupon.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { ConfigModule } from './common/config/config.module';
+import { ConfigModule } from './config/config.module';
 
 @Module({
   imports: [
