@@ -1,17 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform, Type } from 'class-transformer';
-import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 import { BaseQueryDto } from 'src/common/dto';
 
 export class QueryUserDto extends BaseQueryDto {
-  @Transform((value) => (value.value == 'true' ? true : false), {
-    toClassOnly: true,
-  })
-  // @Type(() => Boolean)
-  @IsBoolean()
+
+  @IsNumber()
+  @Type(() => Number)
   @IsOptional()
-  @ApiProperty({ description: '状态', default: true, required: false })
-  status?: boolean;
+  @ApiProperty({
+    description: '状态',
+    example: 1,
+    required: false,
+  })
+  status?: number;
 
   @IsString()
   @Type(() => String)
@@ -23,15 +25,15 @@ export class QueryUserDto extends BaseQueryDto {
   })
   name?: string;
 
-  @IsString()
-  @Type(() => String)
+  @IsNumber()
+  @Type(() => Number)
   @IsOptional()
   @ApiProperty({
     description: '手机号码',
-    example: '18684868152',
+    example: 18684868152,
     required: false,
   })
-  phone?: string;
+  phone?: number;
 
   @IsNumber()
   @Type(() => Number)

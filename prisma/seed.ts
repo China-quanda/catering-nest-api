@@ -10,7 +10,7 @@ async function main() {
     const salt = await bcrypt.genSalt();
     const result = await prisma.user.create({
       data: {
-        phone: '18684868151',
+        phone: 18684868151,
         name: '小螺丝',
         sex: 1,
         password: await bcrypt.hash('12345678', salt),
@@ -386,8 +386,8 @@ async function main() {
     console.log('初始化产品类别数据-result', result);
   }
   // 初始化产用户地址数据
-  if ((await prisma.address.count()) <= 0) {
-    const result = await prisma.address.create({
+  if ((await prisma.userAddress.count()) <= 0) {
+    const result = await prisma.userAddress.create({
       data: {
         name: 'name',
         sex: 1,

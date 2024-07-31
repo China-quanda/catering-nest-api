@@ -1,4 +1,6 @@
 import {
+  HttpException,
+  HttpStatus,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -7,19 +9,99 @@ import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { SignInDto } from './dto/sign.dto';
-import { SecurityConfig } from 'src/config';
+import { Miniprogram, SecurityConfig } from 'src/config';
 import { SignInEntity } from './entities/signIn.entity';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../user/dto/create-user.dto';
+const querystring = require('node:querystring');
+import axios from "axios";
+import { generateRandomString } from "src/utils/random";
 
+import { CodeDto } from './dto/auth.dto';
+import { GetOpenidRes, ResType } from 'src/common/types/auth';
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
+
+
+  /**
+   * 微信小程序登录，有就登录，没有就注册
+   * @param body 
+   * @returns 
+   */
+  async miniprogramLogin(body: CodeDto): Promise<SignInEntity> {
+
+    const result = await this.getOpenid(body)
+
+    const user = await this.userService.findUserByOpenId(result.openid)
+
+    if (user) {
+      return this.generateTokens({ userId: user.id });
+    }
+
+    const createUser = await this.userService.create({
+      name: '小螺丝',
+      openId: result.openid,
+      password: generateRandomString(10)
+    })
+    return this.generateTokens({ userId: createUser.id });
+  }
+
+  /**
+   * 获取微信openid
+   * @param body 
+   * @returns 
+   */
+  private async getOpenid(body: CodeDto): Promise<GetOpenidRes> {
+
+    const miniprogramConfig = this.configService.get<Miniprogram>('miniprogram');
+
+    const params = querystring.stringify({
+      appid: miniprogramConfig.appid,
+      secret: miniprogramConfig.secret,
+      js_code: body.code,
+      grant_type: 'authorization_code'
+    })
+
+    // 调用微信官方接口sns/jscode2session，使用code换取session_key和openid：
+    const url = `https://api.weixin.qq.com/sns/jscode2session?${params}`;
+
+    try {
+      const response = await axios.get(url)
+
+      const data: ResType = response.data;
+
+      if (data?.errcode === 40029) {
+        throw new HttpException('js_code无效', HttpStatus.FORBIDDEN)
+      } else if (data?.errcode === 45011) {
+        throw new HttpException('API 调用太频繁，请稍候再试', HttpStatus.FORBIDDEN)
+      } else if (data?.errcode === 40226) {
+        throw new HttpException('高风险等级用户，小程序登录拦截 。风险等级详见 https://developers.weixin.qq.com/miniprogram/dev/framework/operation.html', HttpStatus.FORBIDDEN)
+      } else if (data?.errcode === -1) {
+        throw new HttpException('系统繁忙，此时请开发者稍候再试', HttpStatus.FORBIDDEN)
+      } else if (!data.session_key || !data.openid) {
+        throw new HttpException('Failed to exchange code for session_key and openid', HttpStatus.FORBIDDEN)
+      } else {
+        const session_key = data.session_key;
+        const openid = data.openid;
+
+        const res = { session_key, openid }
+
+        return res
+      }
+
+    } catch (error) {
+      console.error('error', error);
+      throw new Error(error);
+    }
+  }
+
+
 
   // 本地验证策略 账户密码登录 并返回user
   async validateUser(signInDto: SignInDto): Promise<any> {

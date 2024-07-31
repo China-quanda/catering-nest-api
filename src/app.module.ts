@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './modules/user/user.module';
-import { AddressModule } from './modules/address/address.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ShopModule } from './modules/shop/shop.module';
 import { OrderModule } from './modules/order/order.module';
@@ -15,12 +14,13 @@ import { CouponModule } from './modules/coupon/coupon.module';
 import { PrismaModule } from './common/prisma/prisma.module';
 import { ConfigModule } from './config/config.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { UserAddress } from './modules/userAddress/userAddress.module';
 
 @Module({
   imports: [
     ConfigModule,
     UserModule,
-    AddressModule,
+    UserAddress,
     CategoryModule,
     ShopModule,
     OrderModule,

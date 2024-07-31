@@ -6,4 +6,4 @@ import { AddressController } from './address.controller';
   controllers: [AddressController],
   providers: [AddressService]
 })
-export class AddressModule {}
+export class UserAddress {}

@@ -11,6 +11,12 @@ export interface Config {
   redis?: RedisConfig;
   isPreview?: boolean;
   minio?: MinioConfig;
+  miniprogram? :Miniprogram;
+}
+
+export interface Miniprogram{
+  appid: string;
+  secret: string;
 }
 
 export interface MinioConfig {

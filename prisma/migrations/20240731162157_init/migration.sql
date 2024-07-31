@@ -1,38 +1,41 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
-    "phone" TEXT NOT NULL,
+    "create_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "update_time" TIMESTAMP(3) NOT NULL,
+    "phone" INTEGER,
     "name" TEXT,
     "avatar" TEXT,
-    "sex" INTEGER NOT NULL,
+    "sex" INTEGER DEFAULT 1,
     "birthday" TIMESTAMP(3),
     "password" TEXT NOT NULL,
-    "status" BOOLEAN NOT NULL DEFAULT true,
+    "openId" TEXT,
+    "status" INTEGER DEFAULT 1,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Address" (
+CREATE TABLE "UserAddress" (
     "id" SERIAL NOT NULL,
     "create_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "update_time" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
-    "sex" INTEGER NOT NULL,
+    "sex" INTEGER DEFAULT 1,
     "phone" TEXT NOT NULL,
     "is_default" BOOLEAN NOT NULL DEFAULT false,
-    "latitude" TEXT NOT NULL,
-    "longitude" TEXT NOT NULL,
-    "country" TEXT NOT NULL DEFAULT '中国',
+    "latitude" TEXT,
+    "longitude" TEXT,
+    "country" TEXT DEFAULT '中国',
     "province" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "district" TEXT NOT NULL,
     "street" TEXT NOT NULL,
     "streetNum" TEXT NOT NULL,
-    "cityCode" TEXT NOT NULL,
+    "cityCode" TEXT,
     "userId" INTEGER,
 
-    CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "UserAddress_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -63,8 +66,8 @@ CREATE TABLE "Employee" (
     "name" TEXT NOT NULL,
     "sex" INTEGER NOT NULL,
     "phone" TEXT NOT NULL,
-    "birthday" TIMESTAMP(3) NOT NULL,
-    "marital_status" TIMESTAMP(3) NOT NULL,
+    "birthday" TIMESTAMP(3),
+    "marital_status" INTEGER NOT NULL,
     "entry_date" TIMESTAMP(3) NOT NULL,
     "shopId" INTEGER,
 
@@ -90,7 +93,7 @@ CREATE TABLE "Category" (
     "create_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "update_time" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
-    "shopId" INTEGER,
+    "shopId" INTEGER NOT NULL,
 
     CONSTRAINT "Category_pkey" PRIMARY KEY ("id")
 );
@@ -101,6 +104,9 @@ CREATE TABLE "Product" (
     "create_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "update_time" TIMESTAMP(3) NOT NULL,
     "name" TEXT NOT NULL,
+    "original_price" TEXT NOT NULL,
+    "current_price" TEXT,
+    "pictures" TEXT[],
     "categoryId" INTEGER,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
@@ -109,8 +115,11 @@ CREATE TABLE "Product" (
 -- CreateIndex
 CREATE UNIQUE INDEX "User_phone_key" ON "User"("phone");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "User_openId_key" ON "User"("openId");
+
 -- AddForeignKey
-ALTER TABLE "Address" ADD CONSTRAINT "Address_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "UserAddress" ADD CONSTRAINT "UserAddress_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Employee" ADD CONSTRAINT "Employee_shopId_fkey" FOREIGN KEY ("shopId") REFERENCES "Shop"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -119,7 +128,7 @@ ALTER TABLE "Employee" ADD CONSTRAINT "Employee_shopId_fkey" FOREIGN KEY ("shopI
 ALTER TABLE "Table" ADD CONSTRAINT "Table_shopId_fkey" FOREIGN KEY ("shopId") REFERENCES "Shop"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Category" ADD CONSTRAINT "Category_shopId_fkey" FOREIGN KEY ("shopId") REFERENCES "Shop"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Category" ADD CONSTRAINT "Category_shopId_fkey" FOREIGN KEY ("shopId") REFERENCES "Shop"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Product" ADD CONSTRAINT "Product_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE SET NULL ON UPDATE CASCADE;

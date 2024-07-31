@@ -8,6 +8,7 @@ import { UserModule } from '../user/user.module';
 import { SecurityConfig } from 'src/config';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { LocalStrategy } from './strategy/local.strategy';
+import { AuthMiniprogramController } from './auth.miniprogram.controller';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { LocalStrategy } from './strategy/local.strategy';
       inject: [ConfigService],
     }),
   ],
-  controllers: [AuthController],
+  controllers: [AuthController,AuthMiniprogramController],
   providers: [AuthService, JwtStrategy, LocalStrategy],
 })
 export class AuthModule {}

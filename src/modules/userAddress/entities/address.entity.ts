@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Address } from '@prisma/client';
+import { UserAddress } from '@prisma/client';
 import { BaseEntity } from 'src/common/entity';
 
-export class AddressEntity extends BaseEntity implements Address {
+export class AddressEntity extends BaseEntity implements UserAddress {
   @ApiProperty({ description: '手机号码' })
   phone: string;
   @ApiProperty({ description: '名称' })

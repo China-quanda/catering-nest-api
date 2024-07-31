@@ -14,6 +14,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
+    console.log('exception',exception);
+    
     if (status === 400) {
       // 验证请求报错 应该捕获class-validator
       // const e: any = exception.getResponse();
@@ -36,6 +38,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
         data: null,
       });
     } else {
+      console.log(111);
+      
       response.status(status).json({
         code: status,
         timestamp: new Date().toISOString(),

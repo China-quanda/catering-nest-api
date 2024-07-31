@@ -35,10 +35,10 @@ export class UserService {
       },
       query,
     );
-    const where = {
+    const where: Prisma.UserWhereInput = {
       AND: [
         {
-          username: {
+          name: {
             contains: query.name,
           },
         },
@@ -81,6 +81,11 @@ export class UserService {
     const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) throw new NotFoundException(`Not Found user a id:${id}`);
     return user;
+  }
+
+  /**根据openId查询用户 */
+  async findUserByOpenId(openId:string): Promise<User> {
+    return await this.prisma.user.findUnique({ where: { openId } });
   }
 
   async findOneUser(where: Prisma.UserWhereInput): Promise<User> {

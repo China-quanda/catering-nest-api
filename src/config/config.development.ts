@@ -1,5 +1,9 @@
 import { defineConfig } from './index';
 export default defineConfig({
+  miniprogram: {
+    appid:'wxd5abd9f03cb39b0e',
+    secret:'72f7bc51ee70b00544a3a93ee98d121c'
+  },
   minio: {
     endPoint: 'localhost',
     port: 9000,

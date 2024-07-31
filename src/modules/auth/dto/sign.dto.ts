@@ -1,14 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, Length } from 'class-validator';
 
 export class SignInDto {
   @ApiProperty({
     description: '手机号码',
-    example: '18684868152',
+    example: 18684868152,
   })
-  @IsString()
+  @IsNumber()
   @IsNotEmpty({ message: '手机号码不为空' })
-  phone: string;
+  phone: number;
 
   @ApiProperty({
     description: '密码',

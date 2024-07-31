@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
-import { Address, Prisma } from '@prisma/client';
+import { UserAddress, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/common/prisma/prisma.service';
 import { ResultList } from 'src/utils/result';
 import { QueryAddressDto } from './dto/query-address.dto';
@@ -10,15 +10,15 @@ import { QueryAddressDto } from './dto/query-address.dto';
 export class AddressService {
   constructor(private prisma: PrismaService) {}
 
-  async create(body: CreateAddressDto): Promise<Address> {
-    const result = await this.prisma.address.create({
+  async create(body: CreateAddressDto): Promise<UserAddress> {
+    const result = await this.prisma.userAddress.create({
       data: body,
     });
     if (!result) throw new HttpException('创建失败！', HttpStatus.BAD_REQUEST);
     return result;
   }
 
-  async findAll(query?: QueryAddressDto): Promise<ResultList<Address[]>> {
+  async findAll(query?: QueryAddressDto): Promise<ResultList<UserAddress[]>> {
     query = Object.assign(
       {
         ...query,
@@ -28,7 +28,7 @@ export class AddressService {
       query,
     );
     console.log('query', query);
-    let where: Prisma.AddressWhereInput = {
+    let where: Prisma.UserAddressWhereInput = {
       AND: [
         {
           user:{
@@ -73,12 +73,12 @@ export class AddressService {
       ],
     };
   
-    const result = await this.prisma.address.findMany({
+    const result = await this.prisma.userAddress.findMany({
       where,
       take: query.pageSize,
       skip: (query.pageNum - 1) * query.pageSize,
     });
-    const total = await this.prisma.address.count({
+    const total = await this.prisma.userAddress.count({
       where,
     });
     return {
@@ -91,17 +91,17 @@ export class AddressService {
     };
   }
 
-  async findOne(id: number): Promise<Address> {
-    const result = await this.prisma.address.findUnique({
+  async findOne(id: number): Promise<UserAddress> {
+    const result = await this.prisma.userAddress.findUnique({
       where: { id },
     });
     if (!result) throw new NotFoundException(`Not Found a id:${id}`);
     return result;
   }
 
-  async update(id: number, body: UpdateAddressDto): Promise<Address> {
+  async update(id: number, body: UpdateAddressDto): Promise<UserAddress> {
     try {
-      const result = await this.prisma.address.update({
+      const result = await this.prisma.userAddress.update({
         where: { id },
         data: body,
       });
@@ -115,9 +115,9 @@ export class AddressService {
     }
   }
 
-  async remove(id: number): Promise<Address> {
+  async remove(id: number): Promise<UserAddress> {
     try {
-      const result = await this.prisma.address.delete({
+      const result = await this.prisma.userAddress.delete({
         where: { id },
       });
       if (!result) throw new NotFoundException(`Not Found a id:${id}`);
@@ -134,7 +134,7 @@ export class AddressService {
     if (!ids.length) {
       throw new HttpException(`ids不能为空`, HttpStatus.BAD_REQUEST);
     }
-    const result = await this.prisma.address.deleteMany({
+    const result = await this.prisma.userAddress.deleteMany({
       where: {
         id: {
           in: ids,

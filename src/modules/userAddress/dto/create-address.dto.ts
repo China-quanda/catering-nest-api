@@ -4,7 +4,7 @@ import { Type } from "class-transformer";
 import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 
-export class CreateAddressDto implements Prisma.AddressUncheckedCreateInput {
+export class CreateAddressDto implements Prisma.UserAddressUncheckedCreateInput {
   @ApiProperty({ description: '名称' })
   @IsString()
   @Type(() => String)
