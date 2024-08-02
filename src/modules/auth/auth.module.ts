@@ -9,6 +9,7 @@ import { SecurityConfig } from 'src/config';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { LocalStrategy } from './strategy/local.strategy';
 import { AuthMiniprogramController } from './auth.miniprogram.controller';
+import { CaptchaService } from 'src/captcha/captcha.service';
 
 @Module({
   imports: [
@@ -29,6 +30,6 @@ import { AuthMiniprogramController } from './auth.miniprogram.controller';
     }),
   ],
   controllers: [AuthController,AuthMiniprogramController],
-  providers: [AuthService, JwtStrategy, LocalStrategy],
+  providers: [AuthService, JwtStrategy, LocalStrategy,CaptchaService],
 })
 export class AuthModule {}

@@ -18,14 +18,18 @@ const querystring = require('node:querystring');
 import axios from "axios";
 import { generateRandomString } from "src/utils/random";
 
-import { CodeDto } from './dto/auth.dto';
+import { CodeDto, PhoneCodeLogin } from './dto/auth.dto';
 import { GetOpenidRes, ResType } from 'src/common/types/auth';
+import { PrismaService } from 'src/common/prisma/prisma.service';
+import { CaptchaService } from 'src/captcha/captcha.service';
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    private prisma: PrismaService,
+    private readonly captchaService: CaptchaService,
   ) { }
 
 
@@ -47,6 +51,36 @@ export class AuthService {
     const createUser = await this.userService.create({
       name: '小螺丝',
       openId: result.openid,
+      password: generateRandomString(10)
+    })
+    return this.generateTokens({ userId: createUser.id });
+  }
+  async phoneCodeLogin(body: PhoneCodeLogin): Promise<SignInEntity> {
+
+
+    console.log('body',body);
+    
+
+    const user = await this.prisma.user.findUnique({
+      where: {
+        phone:body.phone
+      }
+    })
+
+    console.log('user',user);
+    
+
+    if (user) {
+      const isValid = await this.captchaService.validateCaptcha({ account: String(body.phone), code: body.code })
+      if(!isValid) {
+        throw new HttpException('验证码错误', HttpStatus.BAD_REQUEST)
+      }
+      return this.generateTokens({ userId: user.id });
+    }
+
+    const createUser = await this.userService.create({
+      phone: body.phone,
+      name: '小螺丝',
       password: generateRandomString(10)
     })
     return this.generateTokens({ userId: createUser.id });

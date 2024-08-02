@@ -5,7 +5,7 @@ import { BaseEntity } from 'src/common/entity';
 export class UserEntity extends BaseEntity implements User {
 
   @ApiProperty({ description: '手机号' })
-  phone: number;
+  phone: bigint;
 
   @ApiProperty({ description: '用户名称' })
   name: string;

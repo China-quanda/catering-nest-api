@@ -19,7 +19,7 @@ model User {
   id       Int       @id @default(autoincrement())
   createTime DateTime @default(now()) @map("create_time")
   updateTime DateTime @updatedAt @map("update_time")
-  phone    Int?       @unique // 手机号码
+  phone    BigInt?       @unique // 手机号码
   name     String? // 用户名称
   avatar     String?
   sex      Int? @default(1) //性别 1男 2女
@@ -28,6 +28,17 @@ model User {
   openId String? @unique// 微信小程序openid
   status Int? @default(1) //状态 1启用 2禁用
   addresss UserAddress[]
+}
+
+// 验证码
+model Captcha {
+  id       Int       @id @default(autoincrement())
+  createTime DateTime @default(now()) @map("create_time")
+  updateTime DateTime @updatedAt @map("update_time")
+  account     String?
+  code     String
+  expiresTime DateTime @map("expires_time")
+  used Int @default(0) //是否使用 0未使用 1已使用
 }
 
 // 用户地址

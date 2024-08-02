@@ -10,7 +10,7 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import { LocalAuthGuard } from './guard/local-auth.guard';
 
 import { BaseController } from 'src/common/controller';
-import { CodeDto } from './dto/auth.dto';
+import { CodeDto, PhoneCodeLogin } from './dto/auth.dto';
 @ApiTags('小程序auth授权')
 @Controller('miniprogram/auth')
 export class AuthMiniprogramController extends BaseController {
@@ -23,6 +23,14 @@ export class AuthMiniprogramController extends BaseController {
   @Post('login')
   async login(@Body() body : CodeDto) {
     const result = await this.authService.miniprogramLogin(body)
+    return this.success(result)
+  }
+
+  @ApiOperation({ summary: '手机号码登录' })
+  @ApiCreatedResponse({ type: SignInEntity })
+  @Post('phoneCodeLogin')
+  async phoneCodeLogin(@Body() body : PhoneCodeLogin) {
+    const result = await this.authService.phoneCodeLogin(body)
     return this.success(result)
   }
   

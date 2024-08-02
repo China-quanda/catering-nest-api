@@ -15,6 +15,7 @@ import { PrismaModule } from './common/prisma/prisma.module';
 import { ConfigModule } from './config/config.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserAddress } from './modules/userAddress/userAddress.module';
+import { CaptchaModule } from './captcha/captcha.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UserAddress } from './modules/userAddress/userAddress.module';
     CouponModule,
     PrismaModule,
     AuthModule,
+    CaptchaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
