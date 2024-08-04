@@ -41,6 +41,15 @@ model Captcha {
   used Int @default(0) //是否使用 0未使用 1已使用
 }
 
+// 会员等级
+model UserLevel {
+  id       Int       @id @default(autoincrement())
+  createTime DateTime @default(now()) @map("create_time")
+  updateTime DateTime @updatedAt @map("update_time")
+  levelName     String @unique @map("level_name") // 会员等级名称 普通 白金 黄金 钻石
+  levelIntegral     Int @unique @map("level_integral") // 会员积分 0  100 300 500
+}
+
 // 用户地址
 model UserAddress {
   id         Int      @id @default(autoincrement())
@@ -90,10 +99,10 @@ model Employee {
   createTime    DateTime @default(now()) @map("create_time")
   updateTime    DateTime @updatedAt @map("update_time")
   name          String //姓名
-  sex           Int //性别 1男 2女
-  // idNumber      Int @map("id_number") //身份证号
-  // pwassword      String //密码
-  // status Boolean @default(true) //状态
+  sex           Int //姓别 1男 2女
+  idNumber      String @map("id_number") //身份证号
+  password      String //密码
+  status Int? @default(1) //状态 1启用 2禁用
   phone         String //手机号码
   birthday      DateTime? //生日
   //婚姻状态 1未婚 2已婚 3离异 4丧偶
@@ -101,7 +110,7 @@ model Employee {
   entryDate     DateTime @map("entry_date") //入职日期
   // 职位
   shop          Shop?    @relation(fields: [shopId], references: [id])
-  shopId        Int?
+  shopId        Int
 }
 
 // 餐桌

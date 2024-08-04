@@ -29,7 +29,7 @@ import { CaptchaService } from 'src/captcha/captcha.service';
       inject: [ConfigService],
     }),
   ],
-  controllers: [AuthController,AuthMiniprogramController],
-  providers: [AuthService, JwtStrategy, LocalStrategy,CaptchaService],
+  controllers: [AuthController, AuthMiniprogramController],
+  providers: [AuthService, JwtStrategy, LocalStrategy, CaptchaService],
 })
 export class AuthModule {}

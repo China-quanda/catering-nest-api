@@ -1,13 +1,7 @@
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { ApiTags, ApiOperation, ApiCreatedResponse } from '@nestjs/swagger';
 import { SignInEntity } from './entities/signIn.entity';
-import { RefreshTokenInput } from './dto/refresh-token.input';
-import { SignInDto } from './dto/sign.dto';
-import { Public } from 'src/common/decorator';
-import { UserEntity } from '../user/entities/user.entity';
-import { CreateUserDto } from '../user/dto/create-user.dto';
-import { LocalAuthGuard } from './guard/local-auth.guard';
 
 import { BaseController } from 'src/common/controller';
 import { CodeDto, PhoneCodeLogin } from './dto/auth.dto';
@@ -21,17 +15,16 @@ export class AuthMiniprogramController extends BaseController {
   @ApiOperation({ summary: '微信小程序登陆' })
   @ApiCreatedResponse({ type: SignInEntity })
   @Post('login')
-  async login(@Body() body : CodeDto) {
-    const result = await this.authService.miniprogramLogin(body)
-    return this.success(result)
+  async login(@Body() body: CodeDto) {
+    const result = await this.authService.miniprogramLogin(body);
+    return this.success(result);
   }
 
   @ApiOperation({ summary: '手机号码登录' })
   @ApiCreatedResponse({ type: SignInEntity })
   @Post('phoneCodeLogin')
-  async phoneCodeLogin(@Body() body : PhoneCodeLogin) {
-    const result = await this.authService.phoneCodeLogin(body)
-    return this.success(result)
+  async phoneCodeLogin(@Body() body: PhoneCodeLogin) {
+    const result = await this.authService.phoneCodeLogin(body);
+    return this.success(result);
   }
-  
 }

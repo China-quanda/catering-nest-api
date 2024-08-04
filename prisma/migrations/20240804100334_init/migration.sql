@@ -3,7 +3,7 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "create_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "update_time" TIMESTAMP(3) NOT NULL,
-    "phone" INTEGER,
+    "phone" BIGINT,
     "name" TEXT,
     "avatar" TEXT,
     "sex" INTEGER DEFAULT 1,
@@ -13,6 +13,30 @@ CREATE TABLE "User" (
     "status" INTEGER DEFAULT 1,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Captcha" (
+    "id" SERIAL NOT NULL,
+    "create_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "update_time" TIMESTAMP(3) NOT NULL,
+    "account" TEXT,
+    "code" TEXT NOT NULL,
+    "expires_time" TIMESTAMP(3) NOT NULL,
+    "used" INTEGER NOT NULL DEFAULT 0,
+
+    CONSTRAINT "Captcha_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UserLevel" (
+    "id" SERIAL NOT NULL,
+    "create_time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "update_time" TIMESTAMP(3) NOT NULL,
+    "level_name" TEXT NOT NULL,
+    "level_integral" INTEGER NOT NULL,
+
+    CONSTRAINT "UserLevel_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -117,6 +141,12 @@ CREATE UNIQUE INDEX "User_phone_key" ON "User"("phone");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_openId_key" ON "User"("openId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "UserLevel_level_name_key" ON "UserLevel"("level_name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "UserLevel_level_integral_key" ON "UserLevel"("level_integral");
 
 -- AddForeignKey
 ALTER TABLE "UserAddress" ADD CONSTRAINT "UserAddress_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;

@@ -1,10 +1,17 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Prisma } from "@prisma/client";
-import { Type } from "class-transformer";
-import { IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { Prisma } from '@prisma/client';
+import { Type } from 'class-transformer';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
-
-export class CreateAddressDto implements Prisma.UserAddressUncheckedCreateInput {
+export class CreateAddressDto
+  implements Prisma.UserAddressUncheckedCreateInput
+{
   @ApiProperty({ description: '名称' })
   @IsString()
   @Type(() => String)

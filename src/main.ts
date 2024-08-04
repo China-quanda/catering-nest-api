@@ -35,6 +35,9 @@ async function bootstrap() {
   // 配置拦截器
   app.useGlobalInterceptors(new LoggingInterceptor());
 
+  // 开启跨域
+  app.enableCors();
+
   //配置静态资源目录
   app.useStaticAssets('public', { prefix: nestConfig.static });
 
